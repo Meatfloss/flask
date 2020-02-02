@@ -15,6 +15,17 @@ class Todo(db.Model):
     def __repr__(self):
         return '<Task %r>' % self.id
 
+class Test(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    ip = db.Column(db.String(200), nullable=False)
+    username = db.Column(db.String(200), nullable=False)
+    password = db.Column(db.String(200), nullable=False)
+    completed = db.Column(db.Integer, default=0)
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return '<Task %r>' % self.id
+
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -32,7 +43,7 @@ def index():
     else:
         tasks = Todo.query.order_by(Todo.date_created).all()
         return render_template('index.html', tasks=tasks)
-        
+
 @app.route('/delete/<int:id>')
 def delete(id):
     task_to_delete = Todo.query.get_or_404(id)
@@ -60,5 +71,24 @@ def update(id):
     else:
         return render_template('update.html', task=task)
 
+@app.route('/test', methods=['POST', 'GET'])
+def test():
+    if request.method == 'POST':
+        ip = request.form['ip']
+        username = request.form['username']
+        password = request.form['password']
+        new_test= Test(ip=ip,username=username,password=password)
+
+        try:
+            db.session.add(new_test)
+            db.session.commit()
+            return redirect('/test')
+        except:
+            return 'There was an issue adding your task'
+
+    else:
+        tests = Test.query.order_by(Test.date_created).all()
+        return render_template('test.html', tests=tests)
+        
 if __name__ == "__main__":
     app.run(debug=True)
