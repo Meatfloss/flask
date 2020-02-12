@@ -106,42 +106,6 @@ def approve():
 
 
     return render_template('approve.html', resources = resources)
-
-
-@app.route('/update/<int:id>', methods=['GET', 'POST'])
-def update(id):
-    task = Todo.query.get_or_404(id)
-
-    if request.method == 'POST':
-        task.content = request.form['content']
-
-        try:
-            db.session.commit()
-            return redirect('/')
-        except:
-            return 'There was an issue updating your task'
-
-    else:
-        return render_template('update.html', task=task)
-
-@app.route('/test', methods=['POST', 'GET'])
-def test():
-    if request.method == 'POST':
-        ip = request.form['ip']
-        username = request.form['username']
-        password = request.form['password']
-        new_test= Test(ip=ip,username=username,password=password)
-
-        try:
-            db.session.add(new_test)
-            db.session.commit()
-            return redirect('/test')
-        except:
-            return 'There was an issue adding your task'
-
-    else:
-        tests = Test.query.order_by(Test.date_created).all()
-        return render_template('test.html', tests=tests)
         
 if __name__ == "__main__":
     app.run(debug=True)
