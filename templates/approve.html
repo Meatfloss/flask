@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+<div class="container">
+    {% block head %}
+    <title>Hyper-V</title>
+    {% endblock %}
+
+    {% block body %}
+    <div class="container">
+        <h1 style="text-align: center;">审批与记录</h1>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">序号</th>
+                    <th scope="col">订单编号</th>
+                    <th scope="col">项目名称</th>
+                    <th scope="col">用途</th>
+                    <th scope="col">操作系统</th>
+                    <th scope="col">CPU</th>
+                    <th scope="col">内存</th>
+                    <th scope="col">产生费用</th>
+                    <th scope="col">审批状态</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resource in resources %}
+                <tr data-toggle="collapse" data-target="#accordion{{loop.index}}" class="clickable">
+                    <th scope="row">{{loop.index}}</th>
+                    <td>{{resource.orderId}}</td>
+                    <td>{{resource.name}}</td>
+                    <td>{{resource.usage}}</td>
+                    <td>{{resource.system}}</td>
+                    <td>{{resource.cpu}}</td>
+                    <td>{{resource.memory}}</td>
+                    <td>{{resource.price}}</td>
+                    <td>{{resource.status}}</td>
+                </tr>
+                <tr>
+                    <td colspan="9">
+                        <div id="accordion{{loop.index}}" class="collapse">
+                            <p>{{resource.detail}}</p>
+                            <p>已通过：{{resource.approvedBy}}</p>
+                            <div class="form-row">
+                                <div class="col-8">
+                                    <input type="text" placeholder="拒绝理由" class="form-control" >
+                                </div>
+                                <div class="col-2">
+                                    <button type="submit" class="btn btn-primary form-control">通过</button>
+                                </div>
+                                <div class="col-2">
+                                    <button type="submit" class="btn btn-danger form-control">拒绝</button>
+                                </div>
+                        </div>
+                    </td>
+                </tr>    
+                {% endfor %}            
+            </tbody>
+        </table>
+
+    </div>
+
+    {% endblock %}
+</div>

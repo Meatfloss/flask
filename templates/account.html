@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+<div class="container">
+    {% block head %}
+    <title>Hyper-V</title>
+    {% endblock %}
+
+    {% block body %}
+    <div class="content">
+        <h1 style="text-align: center;">个人信息</h1>
+        <form>
+            <div class="form-group">
+                <label for="name">姓名</label>
+                <input type="text" class="form-control" name="name">
+
+            </div>
+            <div class="form-group">
+                <label for="department">部门</label>
+                <input type="text" class="form-control" name="department">
+
+            </div>
+            <div class="form-group">
+                <label for="cell">手机</label>
+                <input type="text" class="form-control" name="cell">
+
+            </div>
+            <div class="form-group">
+                <label for="phone">座机</label>
+                <input type="text" class="form-control" name="phone">
+
+            </div>
+            <div class="form-group">
+                <label for="email">邮箱</label>
+                <input type="email" class="form-control" name="email">
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">提交</button>
+            </div>
+        </form>
+    </div>
+    {% endblock %}
+</div>

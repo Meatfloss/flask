@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+<div class="container">
+    {% block head %}
+    <title>Hyper-V</title>
+    {% endblock %}
+
+    {% block body %}
+    <div class="container">
+        <h1 style="text-align: center;">资源清单</h1>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">序号</th>
+                    <th scope="col">订单编号</th>
+                    <th scope="col">项目名称</th>
+                    <th scope="col">用途</th>
+                    <th scope="col">操作系统</th>
+                    <th scope="col">CPU</th>
+                    <th scope="col">内存</th>
+                    <th scope="col">产生费用</th>
+                    <th scope="col">审批状态</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resource in resources %}
+                <tr data-toggle="collapse" data-target="#accordion{{loop.index}}" class="clickable">
+                    <th scope="row">{{loop.index}}</th>
+                    <td>{{resource.orderId}}</td>
+                    <td>{{resource.name}}</td>
+                    <td>{{resource.usage}}</td>
+                    <td>{{resource.system}}</td>
+                    <td>{{resource.cpu}}</td>
+                    <td>{{resource.memory}}</td>
+                    <td>{{resource.price}}</td>
+                    <td>{{resource.status}}</td>
+                </tr>
+                <tr>
+                    <td colspan="9">
+                        <div id="accordion{{loop.index}}" class="collapse">
+                            <p>{{resource.detail}}</p>
+                            <button type="submit" class="btn btn-danger">关机</button>
+                            <button type="submit" class="btn btn-primary">开机</button>
+                            <button type="submit" class="btn btn-warning">重启</button>
+                        
+                        </div>
+                    </td>
+                </tr>    
+                {% endfor %}            
+            </tbody>
+        </table>
+
+    </div>
+
+    {% endblock %}
+</div>
